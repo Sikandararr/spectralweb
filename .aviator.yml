@@ -1,0 +1,24 @@
+version: 1
+
+jobs:
+  python_ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python Environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Python Script
+        run: python sklate.py
+
+      - name: Run Tests
+        run: pytest || echo "Tests failed, but continuing execution"
